@@ -5,7 +5,7 @@ import max7219arrsim
 buf = bytearray(8*4*2)
 newbuf = bytearray(8*4)
 
-tw = font844.Typewriter('APPLE.HAN')
+tw = font844.Typewriter('H04.HAN')
 
 t = 0
 
