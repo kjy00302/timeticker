@@ -33,3 +33,11 @@ void font_writehan(unsigned int chr){
   font_writetonewbuf32(HAN_OFFSET + offset[1] * 32);
   font_writetonewbuf32(HAN_OFFSET + offset[2] * 32);
 }
+
+void font_write(unsigned int chr){
+  if (chr < 256){
+    font_writeascii(chr);
+  } else if (chr >= 0xac00 && chr < 0xd7a4) {
+    font_writehan(chr);
+  }
+}
