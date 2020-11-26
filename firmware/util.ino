@@ -21,3 +21,7 @@ int str2int(String str, int n){
   }
 return t;
 }
+
+void serialwait(char i){
+  while (Serial.available() < i);
+}
