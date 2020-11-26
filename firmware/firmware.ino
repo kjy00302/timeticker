@@ -20,7 +20,18 @@ void setup(){
   time_init();
 }
 
+void displaytime(unsigned char* time){
+  writenumber(time[0], 2);
+  charbuffer_enqueue(':');
+  writenumber(time[1], 2);
+  charbuffer_enqueue(':');
+  writenumber(time[2], 2);
+}
+
 void at_second(){
+  if (timeroutine_time[2] % 10 == 0){
+    displaytime(timeroutine_time);
+  }
 }
 
 void at_minute(){
