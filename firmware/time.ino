@@ -35,10 +35,10 @@ char time_getgpstime(unsigned char* time){
   String t = gpsSerial.readStringUntil('\n');
   gpsSerial.end();
   char firstcomma = t.indexOf(',');
-  if (firstcomma == -1){
+  char secondcomma = t.indexOf(',', firstcomma+1);
+  if (firstcomma == -1 || secondcomma-firstcomma == 1){
     return false;
   }
-  char secondcomma = t.indexOf(',', firstcomma+1);
   String timestr = t.substring(firstcomma+1, secondcomma);
   time[0] = str2int(timestr.substring(0,2), 2);
   time[1] = str2int(timestr.substring(2,4), 2);
@@ -60,11 +60,13 @@ unsigned char time_readrtcregister(unsigned char addr){
   return t;
 }
 
-void time_sync(){
+char time_sync(){
   unsigned char time[3];
   if (time_getgpstime(time)){
     time_setrtctime((time[0]+9)%24, time[1], time[2]);
+    return true;
   }
+  return false;
 }
 
 void time_writertcregister(unsigned char addr, unsigned char val){
