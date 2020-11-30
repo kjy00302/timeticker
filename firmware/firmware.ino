@@ -5,13 +5,14 @@ extern unsigned char timeroutine_time[];
 extern char display_newbuf_left;
 
 unsigned char evtflag = 0;
-unsigned char confflag = 0b00000001;
+unsigned char confflag = 0b00000011;
 
 const unsigned char EVT_SECOND = _BV(0);
 const unsigned char EVT_MINUTE = _BV(1);
 const unsigned char EVT_HOUR = _BV(2);
 
-const unsigned char CONF_CLOCK_MODE = _BV(0);
+const unsigned char CONF_CLOCK_UPDATE = _BV(1);
+const unsigned char CONF_DISPLAY_SCROLL_UPDATE = _BV(0);
 
 void setup(){
   timer_init();
@@ -48,23 +49,23 @@ void loop(){
     cmdparse();
   }
 
-  if ((evtflag & EVT_SECOND) != 0){
-    at_second();
-    evtflag ^= EVT_SECOND;
+  if ((confflag & CONF_CLOCK_UPDATE) != 0){
+    if ((evtflag & EVT_SECOND) != 0){
+      at_second();
+      evtflag ^= EVT_SECOND;
+    }
+
+    if ((evtflag & EVT_MINUTE) != 0){
+      at_minute();
+      evtflag ^= EVT_MINUTE;
+    }
+
+    if ((evtflag & EVT_HOUR) != 0){
+      at_hour();
+      evtflag ^= EVT_HOUR;
+    }
   }
 
-  if ((evtflag & EVT_MINUTE) != 0){
-    at_minute();
-    evtflag ^= EVT_MINUTE;
-  }
-
-  if ((evtflag & EVT_HOUR) != 0){
-    at_hour();
-    evtflag ^= EVT_HOUR;
-  }
-
-  if ((confflag & CONF_CLOCK_MODE) != 0){
-    displayroutine();
-    timeroutine();
-  }
+  displayroutine();
+  timeroutine();
 }
