@@ -1,9 +1,18 @@
+extern unsigned long display_buffer[];
+
+
 void cmdparse(){
   serialwait(2);
   if (Serial.read() == 0xff){
     switch (Serial.read()){
 
       case 0x01: {
+        Serial.write("\xff\x01");
+        break;
+      }
+
+      case 0x21: {
+        memset((char*)display_buffer, 0, 64);
         Serial.write("\xff\x01");
         break;
       }
