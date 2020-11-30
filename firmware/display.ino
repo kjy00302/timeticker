@@ -60,3 +60,9 @@ void display_brightness(unsigned char brightness){
     display_sendcommand(0x0a, brightness);
   }
 }
+
+void display_wipe(){
+  memset((char*)display_buffer, 0, 64);
+  memset((char*)display_new_buffer, 0, 64);
+  display_newbuf_left = 0;
+}

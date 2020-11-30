@@ -19,7 +19,9 @@ void cmdparse(){
       }
 
       case 0x21: {
-        memset((char*)display_buffer, 0, 64);
+        charbuffer_reset();
+        display_wipe();
+        display_update();
         Serial.write("\xff\x01");
         break;
       }

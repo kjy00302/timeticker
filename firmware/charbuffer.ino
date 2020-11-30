@@ -32,3 +32,8 @@ unsigned int charbuffer_dequeue(){
   charbuffer_readptr = (charbuffer_readptr + 1) % 32;
   return t;
 }
+
+void charbuffer_reset(){
+  charbuffer_readptr = 0;
+  charbuffer_writeptr = 0;
+}
