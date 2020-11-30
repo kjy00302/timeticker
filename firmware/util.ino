@@ -25,3 +25,14 @@ return t;
 void serialwait(char i){
   while (Serial.available() < i);
 }
+
+void writenumber(long n, unsigned char len){
+  long e = 1;
+  for (char i=0;i<len-1;i++){
+    e *= 10;
+  }
+  for (char i=0;i<len;i++){
+    charbuffer_enqueue(0x30 + ((n / e) % 10));
+    e /= 10;
+  }
+}
