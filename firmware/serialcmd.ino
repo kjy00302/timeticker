@@ -1,5 +1,5 @@
 extern unsigned long display_buffer[];
-
+extern unsigned char confflag;
 
 void cmdparse(){
   serialwait(2);
@@ -7,6 +7,13 @@ void cmdparse(){
     switch (Serial.read()){
 
       case 0x01: {
+        Serial.write("\xff\x01");
+        break;
+      }
+
+      case 0x02: {
+        serialwait(1);
+        confflag = Serial.read();
         Serial.write("\xff\x01");
         break;
       }

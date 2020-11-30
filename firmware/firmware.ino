@@ -5,11 +5,13 @@ extern unsigned char timeroutine_time[];
 extern char display_newbuf_left;
 
 unsigned char evtflag = 0;
-unsigned char confflag = 0;
+unsigned char confflag = 0b00000001;
 
 const unsigned char EVT_SECOND = _BV(0);
 const unsigned char EVT_MINUTE = _BV(1);
 const unsigned char EVT_HOUR = _BV(2);
+
+const unsigned char CONF_CLOCK_MODE = _BV(0);
 
 void setup(){
   timer_init();
@@ -61,6 +63,8 @@ void loop(){
     evtflag ^= EVT_HOUR;
   }
 
-  displayroutine();
-  timeroutine();
+  if ((confflag & CONF_CLOCK_MODE) != 0){
+    displayroutine();
+    timeroutine();
+  }
 }
