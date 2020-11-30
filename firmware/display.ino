@@ -54,3 +54,9 @@ void display_scroll(){
     display_newbuf_left--;
   }
 }
+
+void display_brightness(unsigned char brightness){
+  if (brightness < 16){
+    display_sendcommand(0x0a, brightness);
+  }
+}

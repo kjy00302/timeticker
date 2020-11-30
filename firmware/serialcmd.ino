@@ -17,6 +17,13 @@ void cmdparse(){
         break;
       }
 
+      case 0x22: {
+        serialwait(1);
+        display_brightness(Serial.read());
+        Serial.write("\xff\x01");
+        break;
+      }
+
       case 0x23: {
         serialwait(1);
         for (unsigned char i=Serial.read();i>0;i--){
