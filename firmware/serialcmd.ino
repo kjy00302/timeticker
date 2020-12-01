@@ -18,6 +18,12 @@ void cmdparse(){
         break;
       }
 
+      case 0x11: {
+        time_sync();
+        Serial.write("\xff\x01");
+        break;
+      }
+
       case 0x21: {
         charbuffer_reset();
         display_wipe();
