@@ -4,6 +4,12 @@ const int M7219DIN = 11;
 const int M7219LOAD = 10;
 const int M7219CLK = 13;
 
+const int M7219_DECODEMODE = 0x09;
+const int M7219_INTENSITY = 0x0a;
+const int M7219_SCANLIMIT = 0x0b;
+const int M7219_SHUTDOWN = 0x0c;
+const int M7219_DISPLAYTEST = 0x0f;
+
 unsigned long display_buffer[16] ={0,};
 unsigned int display_new_buffer[16] = {0,};
 
@@ -11,14 +17,13 @@ char display_newbuf_left = 0;
 
 void display_init(){
   pinMode(M7219LOAD, OUTPUT);
-  // TODO: Remove magic number
-  display_sendcommand(0x0f, 0x00);
-  display_sendcommand(0x0a, 0x01);
-  display_sendcommand(0x0c, 0x00);
-  display_sendcommand(0x0b, 0x07);
-  display_sendcommand(0x09, 0x00);
+  display_sendcommand(M7219_DISPLAYTEST, 0x00);
+  display_sendcommand(M7219_INTENSITY, 0x01);
+  display_sendcommand(M7219_SHUTDOWN, 0x00);
+  display_sendcommand(M7219_SCANLIMIT, 0x07);
+  display_sendcommand(M7219_DECODEMODE, 0x00);
   display_update();
-  display_sendcommand(0x0c, 0x01);
+  display_sendcommand(M7219_SHUTDOWN, 0x01);
 }
 
 void display_sendcommand(byte addr, byte data){
@@ -57,7 +62,7 @@ void display_scroll(){
 
 void display_brightness(unsigned char brightness){
   if (brightness < 16){
-    display_sendcommand(0x0a, brightness);
+    display_sendcommand(M7219_INTENSITY, brightness);
   }
 }
 
