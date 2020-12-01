@@ -10,9 +10,10 @@ unsigned char confflag = 0b00000011;
 const unsigned char EVT_SECOND = _BV(0);
 const unsigned char EVT_MINUTE = _BV(1);
 const unsigned char EVT_HOUR = _BV(2);
+const unsigned char EVT_CHAR_IN = _BV(3);
 
-const unsigned char CONF_CLOCK_UPDATE = _BV(1);
 const unsigned char CONF_DISPLAY_SCROLL_UPDATE = _BV(0);
+const unsigned char CONF_CLOCK_UPDATE = _BV(1);
 
 void setup(){
   timer_init();

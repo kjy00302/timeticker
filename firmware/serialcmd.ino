@@ -1,4 +1,5 @@
 extern unsigned long display_buffer[];
+extern unsigned char evtflag;
 extern unsigned char confflag;
 
 void cmdparse(){
@@ -48,6 +49,7 @@ void cmdparse(){
             charbuffer_enqueue(t);
           }
         }
+        evtflag |= EVT_CHAR_IN;
         Serial.write("\xff\x01");
         break;
       }
