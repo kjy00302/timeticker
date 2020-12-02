@@ -59,6 +59,29 @@ void cmdparse(){
           display_update();
           break;
       }
+
+      case 0x32: {
+        unsigned int addr;
+        unsigned char buf[16];
+        Serial.readBytes((char*)&addr, 2);
+        Serial.readBytes(buf, 16);
+        eeprom_write(addr, buf, 16);
+        while(!eeprom_isready());
+        Serial.write("\xff\x01");
+        break;
+      }
+
+      case 0x33: {
+        unsigned int addr;
+        unsigned char buf[32];
+        Serial.readBytes((char*)&addr, 2);
+        eeprom_read(addr, buf, 32);
+        Serial.write("\xff\x02\x20");
+        for (char i=0;i<32;i++){
+          Serial.write(buf[i]);
+        }
+        break;
+      }
     }
   }
 }
