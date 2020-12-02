@@ -3,11 +3,11 @@ extern const unsigned int PROGMEM CONST_HOUR[][3];
 extern const unsigned int PROGMEM CONST_DIGIT[];
 
 void displaytime_numeric(unsigned char* time){
-  writenumber(time[0], 2);
+  writenumber(time[0], 2, false);
   charbuffer_enqueue(':');
-  writenumber(time[1], 2);
+  writenumber(time[1], 2, false);
   charbuffer_enqueue(':');
-  writenumber(time[2], 2);
+  writenumber(time[2], 2, false);
 }
 
 void displaytime_hangul(unsigned char* time){

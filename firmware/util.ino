@@ -26,13 +26,16 @@ void serialwait(char i){
   while (Serial.available() < i);
 }
 
-void writenumber(long n, unsigned char len){
+void writenumber(long n, unsigned char len, char skippadding){
   long e = 1;
   for (char i=0;i<len-1;i++){
     e *= 10;
   }
   for (char i=0;i<len;i++){
-    charbuffer_enqueue(0x30 + ((n / e) % 10));
+    if (!skippadding || ((n / e) % 10 != 0)){
+      charbuffer_enqueue(0x30 + ((n / e) % 10));
+      skippadding = true;
+    }
     e /= 10;
   }
 }
