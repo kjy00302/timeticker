@@ -36,3 +36,37 @@ void writenumber(long n, unsigned char len){
     e /= 10;
   }
 }
+
+void writestring(unsigned int* arr){
+  unsigned char i = 0;
+  while (arr[i] != 0){
+    charbuffer_enqueue(arr[i++]);
+  }
+}
+
+void writestring_progmem(unsigned int* arr){
+  unsigned char i = 0;
+  unsigned int t = 0;
+  while ((t = pgm_read_word(&(arr[i]))) != 0){
+    charbuffer_enqueue(t);
+    i++;
+  }
+}
+
+void writenumberhan(unsigned char n) {
+  if ((n/100)%10 != 0){
+    if ((n/100)%10 != 1){
+      charbuffer_enqueue(pgm_read_word(&CONST_DIGIT[(n/100)%10-1]));
+    }
+  charbuffer_enqueue(0xbc31); // 백
+  }
+  if ((n/10)%10 != 0){
+    if ((n/10)%10 != 1){
+      charbuffer_enqueue(pgm_read_word(&CONST_DIGIT[(n/10)%10-1]));
+    }
+  charbuffer_enqueue(0xc2ed); // 십
+  }
+  if (n%10 != 0){
+    charbuffer_enqueue(pgm_read_word(&CONST_DIGIT[(n%10)-1]));
+  }
+}
