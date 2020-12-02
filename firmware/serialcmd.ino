@@ -79,6 +79,7 @@ void cmdparse(){
       case 0x24: {
           Serial.readBytes((unsigned char*)display_buffer, 64);
           display_update();
+          Serial.write("\xff\x01");
           break;
       }
 
