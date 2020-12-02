@@ -5,15 +5,17 @@ extern unsigned char timeroutine_time[];
 extern char display_newbuf_left;
 
 unsigned char evtflag = 0;
-unsigned char confflag = 0b01000011;
+unsigned char confflag = 0b01100011;
 
 const unsigned char EVT_SECOND = _BV(0);
 const unsigned char EVT_MINUTE = _BV(1);
 const unsigned char EVT_HOUR = _BV(2);
 const unsigned char EVT_CHAR_IN = _BV(3);
+const unsigned char EVT_TIMESYNC_PENDING = _BV(4);
 
 const unsigned char CONF_DISPLAY_SCROLL_UPDATE = _BV(0);
 const unsigned char CONF_CLOCK_UPDATE = _BV(1);
+const unsigned char CONF_TIME_AUTOSYNC = _BV(5);
 const unsigned char CONF_HANGULTIME = _BV(6);
 
 void setup(){
@@ -41,6 +43,9 @@ void at_second(){
       charbuffer_enqueue(' ');
       displayhumi();
     }
+  } else if ((timeroutine_time[2] == 7) && ((evtflag & EVT_TIMESYNC_PENDING) != 0)){
+    time_sync();
+    evtflag ^= EVT_TIMESYNC_PENDING;
   }
 }
 
@@ -48,6 +53,9 @@ void at_minute(){
 }
 
 void at_hour(){
+  if ((confflag & CONF_TIME_AUTOSYNC) != 0){
+    evtflag |= EVT_TIMESYNC_PENDING;
+  }
 }
 
 void loop(){
