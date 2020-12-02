@@ -19,6 +19,12 @@ void cmdparse(){
         break;
       }
 
+      case 0x03: {
+        Serial.write("\xff\x01");
+        Serial.write(confflag);
+        break;
+      }
+
       case 0x11: {
         time_sync();
         Serial.write("\xff\x01");
@@ -30,6 +36,14 @@ void cmdparse(){
         Serial.readBytes(buf, 3);
         time_setrtctime(buf[0], buf[1], buf[2]);
         Serial.write("\xff\x01");
+        break;
+      }
+
+      case 0x13: {
+        unsigned char buf[3];
+        time_getrtctime(buf);
+        Serial.write("\xff\x02\x03");
+        Serial.write(buf, 3);
         break;
       }
 
@@ -88,6 +102,15 @@ void cmdparse(){
         for (char i=0;i<32;i++){
           Serial.write(buf[i]);
         }
+        break;
+      }
+
+      case 0x41: {
+        int temp = temperature_gettemperature();
+        unsigned long humi = temperature_gethumidity();
+        Serial.write("\xff\x02\x06");
+        Serial.write((char*)&temp, 2);
+        Serial.write((char*)&humi, 4);
         break;
       }
     }
