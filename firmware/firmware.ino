@@ -41,7 +41,7 @@ void at_second(){
     if ((confflag & CONF_HANGULTIME) != 0) {
       displaytemphumi();
     } else {
-      displaytemphumi();
+      displaytemp();
       charbuffer_enqueue(' ');
       displayhumi();
     }
