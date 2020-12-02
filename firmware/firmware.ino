@@ -5,7 +5,7 @@ extern unsigned char timeroutine_time[];
 extern char display_newbuf_left;
 
 unsigned char evtflag = 0;
-unsigned char confflag = 0b01100011;
+unsigned char confflag = 0b01110011;
 
 const unsigned char EVT_SECOND = _BV(0);
 const unsigned char EVT_MINUTE = _BV(1);
@@ -15,6 +15,7 @@ const unsigned char EVT_TIMESYNC_PENDING = _BV(4);
 
 const unsigned char CONF_DISPLAY_SCROLL_UPDATE = _BV(0);
 const unsigned char CONF_CLOCK_UPDATE = _BV(1);
+const unsigned char CONF_AUTO_BRIGHTNESS = _BV(4);
 const unsigned char CONF_TIME_AUTOSYNC = _BV(5);
 const unsigned char CONF_HANGULTIME = _BV(6);
 
@@ -26,6 +27,7 @@ void setup(){
   display_init();
   temperature_init();
   time_init();
+  brightness_init();
 }
 
 void at_second(){
@@ -46,6 +48,9 @@ void at_second(){
   } else if ((timeroutine_time[2] == 7) && ((evtflag & EVT_TIMESYNC_PENDING) != 0)){
     time_sync();
     evtflag ^= EVT_TIMESYNC_PENDING;
+  }
+  if ((confflag & CONF_AUTO_BRIGHTNESS) != 0){
+    brightness_update();
   }
 }
 
