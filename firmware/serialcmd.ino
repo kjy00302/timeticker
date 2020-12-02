@@ -83,6 +83,14 @@ void cmdparse(){
           break;
       }
 
+      case 0x25: {
+        extern unsigned char displayroutine_ms;
+        serialwait(1);
+        displayroutine_ms = Serial.read();
+        Serial.write("\xff\x01");
+        break;
+      }
+
       case 0x32: {
         unsigned int addr;
         unsigned char buf[16];
