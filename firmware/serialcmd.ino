@@ -25,6 +25,14 @@ void cmdparse(){
         break;
       }
 
+      case 0x12: {
+        unsigned char buf[3];
+        Serial.readBytes(buf, 3);
+        time_setrtctime(buf[0], buf[1], buf[2]);
+        Serial.write("\xff\x01");
+        break;
+      }
+
       case 0x21: {
         charbuffer_reset();
         display_wipe();
