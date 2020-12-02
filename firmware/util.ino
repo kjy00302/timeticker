@@ -34,7 +34,7 @@ void writenumber(long n, unsigned char len, char skippadding){
   for (char i=0;i<len;i++){
     if (!skippadding || ((n / e) % 10 != 0)){
       charbuffer_enqueue(0x30 + ((n / e) % 10));
-      skippadding = true;
+      skippadding = false;
     }
     e /= 10;
   }
