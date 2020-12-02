@@ -22,15 +22,24 @@ void setup(){
   Wire.begin();
   Serial.begin(9600);
   display_init();
+  temperature_init();
   time_init();
 }
 
 void at_second(){
-  if (timeroutine_time[2] % 10 == 0){
+  if (timeroutine_time[2] % 20 == 0){
     if ((confflag & CONF_HANGULTIME) != 0) {
       displaytime_hangul(timeroutine_time);
     } else {
       displaytime_numeric(timeroutine_time);
+    }
+  } else if ((timeroutine_time[2] + 10) % 20 == 0){
+    if ((confflag & CONF_HANGULTIME) != 0) {
+      displaytemphumi();
+    } else {
+      displaytemphumi();
+      charbuffer_enqueue(' ');
+      displayhumi();
     }
   }
 }
