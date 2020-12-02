@@ -18,6 +18,7 @@ const unsigned char CONF_CLOCK_UPDATE = _BV(1);
 const unsigned char CONF_AUTO_BRIGHTNESS = _BV(4);
 const unsigned char CONF_TIME_AUTOSYNC = _BV(5);
 const unsigned char CONF_HANGULTIME = _BV(6);
+const unsigned char CONF_24H = _BV(7);
 
 void setup(){
   timer_init();

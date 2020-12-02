@@ -2,8 +2,23 @@ extern const unsigned int* const PROGMEM CONST_STRING[];
 extern const unsigned int PROGMEM CONST_HOUR[][3];
 extern const unsigned int PROGMEM CONST_DIGIT[];
 
+extern unsigned char confflag;
+
 void displaytime_numeric(unsigned char* time){
-  writenumber(time[0], 2, false);
+  if ((confflag & CONF_24H) != 0){
+    writenumber(time[0], 2, false);
+  } else {
+    if (time[0] < 12){
+      charbuffer_enqueue('A');
+    }
+    else {
+      charbuffer_enqueue('P');
+    }
+    charbuffer_enqueue('M');
+    charbuffer_enqueue(' ');
+    char t = time[0] % 12;
+    writenumber((t == 0) ? 12 : t, 2, false);
+  }
   charbuffer_enqueue(':');
   writenumber(time[1], 2, false);
   charbuffer_enqueue(':');
