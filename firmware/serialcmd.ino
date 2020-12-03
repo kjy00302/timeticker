@@ -63,11 +63,11 @@ void cmdparse(){
       }
 
       case 0x23: {
+        unsigned int t;
         serialwait(1);
         for (unsigned char i=Serial.read();i>0;i--){
+          Serial.readBytes((byte*)&t, 2);
           if (!charbuffer_isfull()){
-            unsigned int t;
-            Serial.readBytes((byte*)&t, 2);
             charbuffer_enqueue(t);
           }
         }
