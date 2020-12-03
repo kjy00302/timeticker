@@ -12,6 +12,7 @@ const unsigned char EVT_MINUTE = _BV(1);
 const unsigned char EVT_HOUR = _BV(2);
 const unsigned char EVT_CHAR_IN = _BV(3);
 const unsigned char EVT_TIMESYNC_PENDING = _BV(4);
+const unsigned char EVT_DISPLAY_EMPTY = _BV(5);
 
 const unsigned char CONF_DISPLAY_SCROLL_UPDATE = _BV(0);
 const unsigned char CONF_CLOCK_UPDATE = _BV(1);
@@ -29,24 +30,11 @@ void setup(){
   temperature_init();
   time_init();
   brightness_init();
+  evtflag |= EVT_DISPLAY_EMPTY;
 }
 
 void at_second(){
-  if (timeroutine_time[2] % 20 == 0){
-    if ((confflag & CONF_HANGULTIME) != 0) {
-      displaytime_hangul(timeroutine_time);
-    } else {
-      displaytime_numeric(timeroutine_time);
-    }
-  } else if ((timeroutine_time[2] + 10) % 20 == 0){
-    if ((confflag & CONF_HANGULTIME) != 0) {
-      displaytemphumi();
-    } else {
-      displaytemp();
-      charbuffer_enqueue(' ');
-      displayhumi();
-    }
-  } else if ((timeroutine_time[2] == 7) && ((evtflag & EVT_TIMESYNC_PENDING) != 0)){
+  if ((timeroutine_time[2] == 7) && ((evtflag & EVT_TIMESYNC_PENDING) != 0)){
     time_sync();
     evtflag ^= EVT_TIMESYNC_PENDING;
   }
@@ -87,6 +75,11 @@ void loop(){
     }
   }
 
-  displayroutine();
+  if ((evtflag & EVT_DISPLAY_EMPTY) != 0){
+    tickerroutine();
+    evtflag ^= EVT_DISPLAY_EMPTY;
+  }
+
   timeroutine();
+  displayroutine();
 }

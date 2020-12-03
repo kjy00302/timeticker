@@ -4,6 +4,8 @@ volatile unsigned int displayroutine_t = 0;
 extern unsigned char evtflag;
 extern unsigned char confflag;
 
+char displayroutine_left_line = 0;
+
 void displayroutine(){
   if (displayroutine_t > displayroutine_ms){
     if ((confflag & CONF_DISPLAY_SCROLL_UPDATE) != 0){
@@ -14,8 +16,14 @@ void displayroutine(){
           Serial.write("\xff\x02");
         }
       }
-      display_update();
       display_scroll();
+      display_update();
+      if (displayroutine_left_line > 0){
+          displayroutine_left_line--;
+          if (displayroutine_left_line == 0){
+           evtflag |= EVT_DISPLAY_EMPTY;
+         }
+      }
     }
     displayroutine_t -= displayroutine_ms;
   }

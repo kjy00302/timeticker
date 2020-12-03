@@ -2,6 +2,7 @@ const int HAN_OFFSET = 4096;
 
 extern unsigned int display_new_buffer[];
 extern char display_newbuf_left;
+extern char displayroutine_left_line;
 
 void font_writetonewbuf16(unsigned int addr){
   unsigned char fnt[16];
@@ -10,6 +11,7 @@ void font_writetonewbuf16(unsigned int addr){
     display_new_buffer[i] |= fnt[i] << 8;
   }
   display_newbuf_left = 8;
+  displayroutine_left_line = 40;
 }
 
 void font_writetonewbuf32(unsigned int addr){
@@ -20,6 +22,7 @@ void font_writetonewbuf32(unsigned int addr){
     display_new_buffer[i] |= fnt[i*2+1];
   }
   display_newbuf_left = 16;
+  displayroutine_left_line = 48;
 }
 
 void font_writeascii(unsigned char chr){
