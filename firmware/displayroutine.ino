@@ -25,6 +25,6 @@ void displayroutine(){
          }
       }
     }
-    displayroutine_t -= displayroutine_ms;
+    displayroutine_t = 0;
   }
 }

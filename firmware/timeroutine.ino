@@ -25,6 +25,6 @@ void timeroutine(){
         evtflag |= EVT_HOUR;
       }
     }
-    timeroutine_t -= TIMEROUTINE_MS;
+    timeroutine_t = 0;
   }
 }
