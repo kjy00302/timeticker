@@ -2,8 +2,8 @@ extern const unsigned int* const PROGMEM CONST_STRING[];
 extern const unsigned int PROGMEM CONST_HOUR[][3];
 extern const unsigned int PROGMEM CONST_DIGIT[];
 
-extern unsigned char timeroutine_time[];
 extern unsigned char confflag;
+extern unsigned char timeroutine_time[];
 
 void displaytime_numeric(unsigned char* time){
   if ((confflag & CONF_24H) != 0){

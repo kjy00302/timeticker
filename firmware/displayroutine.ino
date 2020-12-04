@@ -1,9 +1,9 @@
-const int DISPLAYROUTINE_DEFAULT_MS = 20;
-unsigned char displayroutine_ms = DISPLAYROUTINE_DEFAULT_MS;
-volatile unsigned int displayroutine_t = 0;
 extern unsigned char evtflag;
 extern unsigned char confflag;
 
+const int DISPLAYROUTINE_DEFAULT_MS = 20;
+unsigned char displayroutine_ms = DISPLAYROUTINE_DEFAULT_MS;
+volatile unsigned int displayroutine_t = 0;
 char displayroutine_left_line = 0;
 
 void displayroutine(){

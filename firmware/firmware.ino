@@ -1,11 +1,6 @@
 #include <Wire.h>
 #include <SPI.h>
 
-extern char display_newbuf_left;
-
-unsigned char evtflag = 0;
-unsigned char confflag = 0b01110011;
-
 const unsigned char EVT_SECOND = _BV(0);
 const unsigned char EVT_MINUTE = _BV(1);
 const unsigned char EVT_HOUR = _BV(2);
@@ -19,6 +14,14 @@ const unsigned char CONF_AUTO_BRIGHTNESS = _BV(4);
 const unsigned char CONF_TIME_AUTOSYNC = _BV(5);
 const unsigned char CONF_HANGULTIME = _BV(6);
 const unsigned char CONF_24H = _BV(7);
+
+unsigned char evtflag = 0;
+unsigned char confflag =
+  CONF_DISPLAY_SCROLL_UPDATE |
+  CONF_CLOCK_UPDATE |
+  CONF_AUTO_BRIGHTNESS |
+  CONF_TIME_AUTOSYNC |
+  CONF_HANGULTIME ;
 
 void setup(){
   timer_init();

@@ -1,9 +1,11 @@
 const int TIMEROUTINE_MS = 100;
-unsigned char timeroutine_time[3];
-unsigned char lasttime[3] = {255,255,255};
 
 extern unsigned char evtflag;
 extern unsigned char confflag;
+
+unsigned char timeroutine_time[3];
+unsigned char lasttime[3] = {255,255,255};
+
 
 volatile unsigned int timeroutine_t = 0;
 unsigned char timeroutine_state = 0;

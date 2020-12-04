@@ -12,7 +12,6 @@ const int M7219_DISPLAYTEST = 0x0f;
 
 unsigned long display_buffer[16] ={0,};
 unsigned int display_new_buffer[16] = {0,};
-
 char display_newbuf_left = 0;
 
 void display_init(){
