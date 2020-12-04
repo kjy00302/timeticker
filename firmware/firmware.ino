@@ -1,7 +1,6 @@
 #include <Wire.h>
 #include <SPI.h>
 
-extern unsigned char timeroutine_time[];
 extern char display_newbuf_left;
 
 unsigned char evtflag = 0;
@@ -34,10 +33,6 @@ void setup(){
 }
 
 void at_second(){
-  if ((timeroutine_time[2] == 7) && ((evtflag & EVT_TIMESYNC_PENDING) != 0)){
-    time_sync();
-    evtflag ^= EVT_TIMESYNC_PENDING;
-  }
   if ((confflag & CONF_AUTO_BRIGHTNESS) != 0){
     brightness_update();
   }
@@ -76,8 +71,12 @@ void loop(){
   }
 
   if ((evtflag & EVT_DISPLAY_EMPTY) != 0){
-    tickerroutine();
+    if ((evtflag & EVT_TIMESYNC_PENDING) != 0){
+      time_sync();
+      evtflag ^= EVT_TIMESYNC_PENDING;
+  }
     evtflag ^= EVT_DISPLAY_EMPTY;
+    tickerroutine();
   }
 
   timeroutine();
