@@ -13,7 +13,7 @@ void displayroutine(){
         font_write(charbuffer_dequeue());
         if (charbuffer_isempty() && ((evtflag & EVT_CHAR_IN) != 0)){
           evtflag ^= EVT_CHAR_IN;
-          Serial.write("\xff\x02");
+          Serial.write("\xff\x02\x00");
         }
       }
       display_scroll();
