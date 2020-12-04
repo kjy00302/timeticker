@@ -1,4 +1,5 @@
 extern unsigned long display_buffer[];
+extern unsigned int tickerroutine_message[];
 extern unsigned char evtflag;
 extern unsigned char confflag;
 
@@ -22,6 +23,15 @@ void cmdparse(){
       case 0x03: {
         Serial.write("\xff\x01");
         Serial.write(confflag);
+        break;
+      }
+
+      case 0x04: {
+        serialwait(1);
+        unsigned char len = Serial.read();
+        Serial.readBytes((byte*)tickerroutine_message, 2*len);
+        tickerroutine_message[len] = 0;
+        Serial.write("\xff\x01");
         break;
       }
 
