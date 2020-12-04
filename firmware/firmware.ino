@@ -23,7 +23,7 @@ unsigned char confflag =
   CONF_TIME_AUTOSYNC |
   CONF_HANGULTIME ;
 
-void setup(){
+void setup() {
   timer_init();
   SPI.begin();
   Wire.begin();
@@ -35,49 +35,49 @@ void setup(){
   evtflag |= EVT_DISPLAY_EMPTY;
 }
 
-void at_second(){
-  if ((confflag & CONF_AUTO_BRIGHTNESS) != 0){
+void at_second() {
+  if ((confflag & CONF_AUTO_BRIGHTNESS) != 0) {
     brightness_update();
   }
 }
 
-void at_minute(){
+void at_minute() {
 }
 
-void at_hour(){
-  if ((confflag & CONF_TIME_AUTOSYNC) != 0){
+void at_hour() {
+  if ((confflag & CONF_TIME_AUTOSYNC) != 0) {
     evtflag |= EVT_TIMESYNC_PENDING;
   }
 }
 
-void loop(){
+void loop() {
 
-  if (Serial.available()){
+  if (Serial.available()) {
     cmdparse();
   }
 
   timeroutine();
 
-  if ((confflag & CONF_CLOCK_UPDATE) != 0){
-    if ((evtflag & EVT_SECOND) != 0){
+  if ((confflag & CONF_CLOCK_UPDATE) != 0) {
+    if ((evtflag & EVT_SECOND) != 0) {
       at_second();
       evtflag ^= EVT_SECOND;
     }
 
-    if ((evtflag & EVT_MINUTE) != 0){
+    if ((evtflag & EVT_MINUTE) != 0) {
       at_minute();
       evtflag ^= EVT_MINUTE;
     }
 
-    if ((evtflag & EVT_HOUR) != 0){
+    if ((evtflag & EVT_HOUR) != 0) {
       at_hour();
       evtflag ^= EVT_HOUR;
     }
   }
 
-  if ((evtflag & EVT_DISPLAY_EMPTY) != 0){
-    if ((evtflag & EVT_TIMESYNC_PENDING) != 0){
-      if (time_sync()){
+  if ((evtflag & EVT_DISPLAY_EMPTY) != 0) {
+    if ((evtflag & EVT_TIMESYNC_PENDING) != 0) {
+      if (time_sync()) {
         evtflag ^= EVT_TIMESYNC_PENDING;
       }
     }

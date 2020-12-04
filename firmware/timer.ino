@@ -1,7 +1,7 @@
 extern volatile unsigned int timeroutine_t;
 extern volatile unsigned int displayroutine_t;
 
-void timer_init(){
+void timer_init() {
   noInterrupts();
   TCCR2A =  _BV(WGM21); // Set CTC mode
   TCCR2B = _BV(CS22); //Timer divider 64
@@ -11,7 +11,7 @@ void timer_init(){
   interrupts();
 }
 
-ISR(TIMER2_COMPA_vect){
+ISR(TIMER2_COMPA_vect) {
   // Runs every 1 millisecond
   timeroutine_t++;
   displayroutine_t++;

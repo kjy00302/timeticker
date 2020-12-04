@@ -1,6 +1,6 @@
 extern const unsigned int* const PROGMEM CONST_STRING[];
 
-void displaytemphumi(){
+void displaytemphumi() {
   writestring_progmem(CONST_STRING[2]); // 온도는
   displaytemp();
   charbuffer_enqueue(',');
@@ -10,16 +10,16 @@ void displaytemphumi(){
   writestring_progmem(CONST_STRING[1]); // 입니다
 }
 
-void displaytemp(){
+void displaytemp() {
   int t = temperature_gettemperature();
-  writenumber(t/100, 2, true);
+  writenumber(t / 100, 2, true);
   charbuffer_enqueue('.');
-  writenumber(t%100, 2, false);
+  writenumber(t % 100, 2, false);
   charbuffer_enqueue(0xf8); // <degree>
   charbuffer_enqueue('C');
 }
 
-void displayhumi(){
-  writenumber(temperature_gethumidity()/1024, 3, true);
+void displayhumi() {
+  writenumber(temperature_gethumidity() / 1024, 3, true);
   charbuffer_enqueue('%');
 }

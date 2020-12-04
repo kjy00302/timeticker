@@ -5,11 +5,11 @@ extern const unsigned int PROGMEM CONST_DIGIT[];
 extern unsigned char confflag;
 extern unsigned char timeroutine_time[];
 
-void displaytime_numeric(unsigned char* time){
-  if ((confflag & CONF_24H) != 0){
+void displaytime_numeric(unsigned char* time) {
+  if ((confflag & CONF_24H) != 0) {
     writenumber(time[0], 2, false);
   } else {
-    if (time[0] < 12){
+    if (time[0] < 12) {
       charbuffer_enqueue('A');
     }
     else {
@@ -26,21 +26,21 @@ void displaytime_numeric(unsigned char* time){
   writenumber(time[2], 2, false);
 }
 
-void displaytime_hangul(unsigned char* time){
+void displaytime_hangul(unsigned char* time) {
   writestring_progmem(CONST_STRING[0]); // 지금은
   charbuffer_enqueue(0xc624); //오
-  if (time[0] < 12){
+  if (time[0] < 12) {
     charbuffer_enqueue(0xc804); //전
   } else {
     charbuffer_enqueue(0xd6c4); //후
   }
   charbuffer_enqueue(' ');
-  writestring_progmem(CONST_HOUR[time[0]%12]);
+  writestring_progmem(CONST_HOUR[time[0] % 12]);
   charbuffer_enqueue(0xc2dc); // 시
   charbuffer_enqueue(' ');
-  if (time[1] == 0){
-    charbuffer_enqueue(0xc815);charbuffer_enqueue(0xac01); // 정각
-  } else{
+  if (time[1] == 0) {
+    charbuffer_enqueue(0xc815); charbuffer_enqueue(0xac01); // 정각
+  } else {
     writenumberhan(time[1]);
     charbuffer_enqueue(0xbd84); // 분
   }

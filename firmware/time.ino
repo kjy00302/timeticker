@@ -17,40 +17,40 @@ const char ENABLEGPZDAONLY[] PROGMEM  = {
 
 SoftwareSerial gpsSerial = SoftwareSerial(4, 5);
 
-void time_init(){
+void time_init() {
   pinMode(RTC_EN, OUTPUT);
   pinMode(RTC_CLK, OUTPUT);
   digitalWrite(RTC_EN, LOW);
   digitalWrite(RTC_CLK, LOW);
   gpsSerial.begin(9600);
-  for (char i=0;i<77;i++){
+  for (char i = 0; i < 77; i++) {
     gpsSerial.write(pgm_read_byte(&ENABLEGPZDAONLY[i]));
   }
   gpsSerial.end();
 }
 
-char time_getgpstime(unsigned char* time){
+char time_getgpstime(unsigned char* time) {
   gpsSerial.begin(9600);
   flush_rx(&gpsSerial);
   String t = gpsSerial.readStringUntil('\n');
   gpsSerial.end();
   char firstcomma = t.indexOf(',');
-  char secondcomma = t.indexOf(',', firstcomma+1);
-  if (firstcomma == -1 || secondcomma-firstcomma == 1){
+  char secondcomma = t.indexOf(',', firstcomma + 1);
+  if (firstcomma == -1 || secondcomma - firstcomma == 1) {
     return false;
   }
-  String timestr = t.substring(firstcomma+1, secondcomma);
-  time[0] = str2int(timestr.substring(0,2), 2);
-  time[1] = str2int(timestr.substring(2,4), 2);
+  String timestr = t.substring(firstcomma + 1, secondcomma);
+  time[0] = str2int(timestr.substring(0, 2), 2);
+  time[1] = str2int(timestr.substring(2, 4), 2);
   time[2] = sec2int(timestr.substring(4));
   return true;
 }
 
-unsigned char sec2int(String str){
-  return str2int(str.substring(0,2),2) + (str2int(str.substring(3),2) > 50 ? 1 : 0);
+unsigned char sec2int(String str) {
+  return str2int(str.substring(0, 2), 2) + (str2int(str.substring(3), 2) > 50 ? 1 : 0);
 }
 
-unsigned char time_readrtcregister(unsigned char addr){
+unsigned char time_readrtcregister(unsigned char addr) {
   pinMode(RTC_DIO, OUTPUT);
   digitalWrite(RTC_EN, HIGH);
   shiftOut(RTC_DIO, RTC_CLK, LSBFIRST, addr);
@@ -60,16 +60,16 @@ unsigned char time_readrtcregister(unsigned char addr){
   return t;
 }
 
-char time_sync(){
+char time_sync() {
   unsigned char time[3];
-  if (time_getgpstime(time)){
-    time_setrtctime((time[0]+9)%24, time[1], time[2]);
+  if (time_getgpstime(time)) {
+    time_setrtctime((time[0] + 9) % 24, time[1], time[2]);
     return true;
   }
   return false;
 }
 
-void time_writertcregister(unsigned char addr, unsigned char val){
+void time_writertcregister(unsigned char addr, unsigned char val) {
   pinMode(RTC_DIO, OUTPUT);
   digitalWrite(RTC_EN, HIGH);
   shiftOut(RTC_DIO, RTC_CLK, LSBFIRST, addr);
@@ -77,13 +77,13 @@ void time_writertcregister(unsigned char addr, unsigned char val){
   digitalWrite(RTC_EN, LOW);
 }
 
-void time_getrtctime(unsigned char* time){
+void time_getrtctime(unsigned char* time) {
   time[2] = bcddecode(time_readrtcregister(0x81) & 0x7f);
   time[1] = bcddecode(time_readrtcregister(0x83) & 0x7f);
   time[0] = bcddecode(time_readrtcregister(0x85) & 0x3f);
 }
 
-void time_setrtctime(unsigned char h, unsigned char m, unsigned char s){
+void time_setrtctime(unsigned char h, unsigned char m, unsigned char s) {
   time_writertcregister(0x84, bcdencode(h));
   time_writertcregister(0x82, bcdencode(m));
   time_writertcregister(0x80, bcdencode(s));

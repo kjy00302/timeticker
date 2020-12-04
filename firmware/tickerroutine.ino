@@ -4,10 +4,10 @@ extern unsigned char confflag;
 char tickerroutine_index = 0;
 unsigned int tickerroutine_message[33] = {0,};
 
-void tickerroutine(){
-    if ((confflag & CONF_CLOCK_UPDATE) != 0){
-      switch(tickerroutine_index){
-        case 0: {
+void tickerroutine() {
+  if ((confflag & CONF_CLOCK_UPDATE) != 0) {
+    switch (tickerroutine_index) {
+      case 0: {
           if ((confflag & CONF_HANGULTIME) != 0) {
             displaytime_hangul(timeroutine_time);
           } else {
@@ -16,7 +16,7 @@ void tickerroutine(){
           break;
         }
 
-        case 1: {
+      case 1: {
           if ((confflag & CONF_HANGULTIME) != 0) {
             displaytemphumi();
           } else {
@@ -27,14 +27,14 @@ void tickerroutine(){
           break;
         }
 
-        case 2: {
+      case 2: {
           writestring(tickerroutine_message);
-          if (tickerroutine_message[0] == 0){
+          if (tickerroutine_message[0] == 0) {
             evtflag |= EVT_DISPLAY_EMPTY;
           }
           break;
         }
-      }
-      tickerroutine_index = (tickerroutine_index+1)%3;
     }
+    tickerroutine_index = (tickerroutine_index + 1) % 3;
+  }
 }

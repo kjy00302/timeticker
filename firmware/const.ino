@@ -1,7 +1,7 @@
-const unsigned int STR_NOW[] PROGMEM= {0xc9c0, 0xae08, 0xc740, 0x20, 0}; // 지금은
-const unsigned int STR_IPNIDA[] PROGMEM= {0xc785, 0xb2c8, 0xb2e4, 0}; // 입니다
-const unsigned int STR_TEMP[] PROGMEM= {0xc628, 0xb3c4, 0xb294, 0x20, 0}; // 온도는
-const unsigned int STR_HUMI[] PROGMEM= {0xc2b5, 0xb3c4, 0xb294, 0x20, 0}; // 습도는
+const unsigned int STR_NOW[] PROGMEM = {0xc9c0, 0xae08, 0xc740, 0x20, 0}; // 지금은
+const unsigned int STR_IPNIDA[] PROGMEM = {0xc785, 0xb2c8, 0xb2e4, 0}; // 입니다
+const unsigned int STR_TEMP[] PROGMEM = {0xc628, 0xb3c4, 0xb294, 0x20, 0}; // 온도는
+const unsigned int STR_HUMI[] PROGMEM = {0xc2b5, 0xb3c4, 0xb294, 0x20, 0}; // 습도는
 
 const unsigned int* const PROGMEM CONST_STRING[] = {
   STR_NOW,
