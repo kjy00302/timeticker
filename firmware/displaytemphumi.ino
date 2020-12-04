@@ -13,8 +13,6 @@ void displaytemphumi() {
 void displaytemp() {
   int t = temperature_gettemperature();
   writenumber(t / 100, 2, true);
-  charbuffer_enqueue('.');
-  writenumber(t % 100, 2, false);
   charbuffer_enqueue(0xf8); // <degree>
   charbuffer_enqueue('C');
 }
