@@ -53,6 +53,8 @@ void loop(){
     cmdparse();
   }
 
+  timeroutine();
+
   if ((confflag & CONF_CLOCK_UPDATE) != 0){
     if ((evtflag & EVT_SECOND) != 0){
       at_second();
@@ -72,13 +74,13 @@ void loop(){
 
   if ((evtflag & EVT_DISPLAY_EMPTY) != 0){
     if ((evtflag & EVT_TIMESYNC_PENDING) != 0){
-      time_sync();
-      evtflag ^= EVT_TIMESYNC_PENDING;
-  }
+      if (time_sync()){
+        evtflag ^= EVT_TIMESYNC_PENDING;
+      }
+    }
     evtflag ^= EVT_DISPLAY_EMPTY;
     tickerroutine();
   }
 
-  timeroutine();
   displayroutine();
 }
