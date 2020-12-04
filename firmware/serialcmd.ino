@@ -122,10 +122,13 @@ void cmdparse(){
         Serial.write((char*)&humi, 4);
         break;
       }
+
       case 0x42: {
-        asm("jmp 0");
+        Serial.write("\xff\x01");
+        Serial.write(evtflag);
         break;
       }
+
       case 0x43: {
         serialwait(1);
         evtflag = Serial.read();
@@ -134,8 +137,7 @@ void cmdparse(){
       }
 
       case 0x44: {
-        Serial.write("\xff\x01");
-        Serial.write(evtflag);
+        asm("jmp 0");
         break;
       }
     }
