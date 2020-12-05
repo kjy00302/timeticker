@@ -135,14 +135,13 @@ void cmdparse() {
         }
 
       case 0x42: {
+          serialwait(1);
+          evtflag = Serial.read();
           Serial.write("\xff\x01");
-          Serial.write(evtflag);
           break;
         }
 
       case 0x43: {
-          serialwait(1);
-          evtflag = Serial.read();
           Serial.write("\xff\x02\x01");
           Serial.write(evtflag);
           break;
