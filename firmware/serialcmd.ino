@@ -38,7 +38,7 @@ void cmdparse() {
         }
 
       case 0x11: {
-          time_sync();
+          evtflag |= EVT_TIMESYNC_PENDING;
           Serial.write("\xff\x01");
           break;
         }
