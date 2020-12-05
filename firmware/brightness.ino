@@ -7,8 +7,8 @@ void brightness_init() {
 
 void brightness_update() {
   brightness = (brightness + analogRead(A0)) / 2;
-  if (brightness > 40) {
-    display_brightness(0x01);
+  if (brightness > 30) {
+    display_brightness(0x04);
   } else {
     display_brightness(0x00);
   }
