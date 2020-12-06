@@ -76,13 +76,15 @@ void loop() {
   }
 
   if ((evtflag & EVT_DISPLAY_EMPTY) != 0) {
-    if ((evtflag & EVT_TIMESYNC_PENDING) != 0) {
-      if (time_sync()) {
-        evtflag ^= EVT_TIMESYNC_PENDING;
+    if ((confflag & CONF_CLOCK_UPDATE) != 0) {
+      if ((evtflag & EVT_TIMESYNC_PENDING) != 0) {
+        if (time_sync()) {
+          evtflag ^= EVT_TIMESYNC_PENDING;
+        }
       }
+      evtflag ^= EVT_DISPLAY_EMPTY;
+      tickerroutine();
     }
-    evtflag ^= EVT_DISPLAY_EMPTY;
-    tickerroutine();
   }
 
   displayroutine();
