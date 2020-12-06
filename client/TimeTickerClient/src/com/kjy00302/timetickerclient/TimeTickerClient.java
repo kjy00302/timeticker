@@ -26,7 +26,7 @@ public class TimeTickerClient {
             
             boolean serialConnect(int n) {
                 tickerSerPort = serials[n];
-                tickerSerPort.setBaudRate(9600);
+                tickerSerPort.setBaudRate(115200);
                 tickerSerPort.setComPortTimeouts(SerialPort.TIMEOUT_READ_BLOCKING, 100, 0);
                 boolean res = tickerSerPort.openPort();
                 try {

@@ -27,7 +27,7 @@ void setup() {
   timer_init();
   SPI.begin();
   Wire.begin();
-  Serial.begin(9600);
+  Serial.begin(115200);
   display_init();
   temperature_init();
   time_init();
